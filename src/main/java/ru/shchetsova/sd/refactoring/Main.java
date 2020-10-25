@@ -1,11 +1,11 @@
-package ru.akirakozov.sd.refactoring;
+package ru.shchetsova.sd.refactoring;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import ru.akirakozov.sd.refactoring.servlet.AddProductServlet;
-import ru.akirakozov.sd.refactoring.servlet.GetProductsServlet;
-import ru.akirakozov.sd.refactoring.servlet.QueryServlet;
+import ru.shchetsova.sd.refactoring.servlet.AddProductServlet;
+import ru.shchetsova.sd.refactoring.servlet.GetProductsServlet;
+import ru.shchetsova.sd.refactoring.servlet.QueryServlet;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
