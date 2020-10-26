@@ -18,7 +18,7 @@ public class AddProductServletTest {
     private final HttpServletRequest request = mock(HttpServletRequest.class);
     private final HttpServletResponse response = mock(HttpServletResponse.class);
     private final StringWriter writer = new StringWriter();
-    private final AddProductServlet addProductServlet = new AddProductServlet();
+    private final AddProductServlet addProductServlet = new AddProductServlet(db);
 
     private static final String DB_ADDRESS = "jdbc:sqlite:test.db";
 
