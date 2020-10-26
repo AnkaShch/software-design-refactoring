@@ -1,5 +1,7 @@
 package ru.shchetsova.sd.refactoring.db;
 
+import ru.shchetsova.sd.refactoring.Product;
+
 import java.sql.SQLException;
 import java.util.List;
 

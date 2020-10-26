@@ -1,7 +1,7 @@
 package ru.shchetsova.sd.refactoring.servlet;
 
 import ru.shchetsova.sd.refactoring.db.DataBase;
-import ru.shchetsova.sd.refactoring.db.Product;
+import ru.shchetsova.sd.refactoring.Product;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

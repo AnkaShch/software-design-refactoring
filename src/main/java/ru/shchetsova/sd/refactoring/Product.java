@@ -1,4 +1,4 @@
-package ru.shchetsova.sd.refactoring.db;
+package ru.shchetsova.sd.refactoring;
 
 import java.util.Objects;
 
