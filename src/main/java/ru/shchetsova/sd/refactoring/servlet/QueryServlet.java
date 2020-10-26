@@ -1,5 +1,6 @@
 package ru.shchetsova.sd.refactoring.servlet;
 
+import ru.shchetsova.sd.refactoring.Utils;
 import ru.shchetsova.sd.refactoring.db.DataBase;
 import ru.shchetsova.sd.refactoring.Product;
 
@@ -30,10 +31,7 @@ public class QueryServlet extends HttpServlet {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            response.getWriter().println("<html><body>");
-            response.getWriter().println("<h1>Product with max price: </h1>");
-            response.getWriter().println(product.getName() + "\t" + product.getPrice() + "</br>");
-            response.getWriter().println("</body></html>");
+            Utils.printHTML(response, "<h1>Product with max price: </h1>", product.getName() + "\t" + product.getPrice() + "</br>");
 
         } else if ("min".equals(command)) {
             try {
@@ -41,10 +39,7 @@ public class QueryServlet extends HttpServlet {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            response.getWriter().println("<html><body>");
-            response.getWriter().println("<h1>Product with min price: </h1>");
-            response.getWriter().println(product.getName() + "\t" + product.getPrice() + "</br>");
-            response.getWriter().println("</body></html>");
+            Utils.printHTML(response, "<h1>Product with min price: </h1>", product.getName() + "\t" + product.getPrice() + "</br>");
 
         } else if ("sum".equals(command)) {
             long sum = 0;
@@ -53,10 +48,7 @@ public class QueryServlet extends HttpServlet {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            response.getWriter().println("<html><body>");
-            response.getWriter().println("Summary price: ");
-            response.getWriter().println(sum);
-            response.getWriter().println("</body></html>");
+            Utils.printHTML(response, "Summary price: ", String.valueOf(sum));
 
         } else if ("count".equals(command)) {
             long cnt = 0;
@@ -65,10 +57,7 @@ public class QueryServlet extends HttpServlet {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            response.getWriter().println("<html><body>");
-            response.getWriter().println("Number of products: ");
-            response.getWriter().println(cnt);
-            response.getWriter().println("</body></html>");
+            Utils.printHTML(response, "Number of products: ", String.valueOf(cnt));
         } else {
             response.getWriter().println("Unknown command: " + command);
         }
