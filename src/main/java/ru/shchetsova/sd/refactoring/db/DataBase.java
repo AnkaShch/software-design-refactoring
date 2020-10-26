@@ -1,6 +1,7 @@
 package ru.shchetsova.sd.refactoring.db;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public interface DataBase {
     final String DB_URL = "jdbc:sqlite:test.db";
@@ -9,7 +10,7 @@ public interface DataBase {
 
     void addProduct(Product product) throws SQLException;
 
-    void getAllProduct() throws SQLException;
+    List<Product> getAllProduct() throws SQLException;
 
     Product getProductWithMinPrise() throws SQLException;
 

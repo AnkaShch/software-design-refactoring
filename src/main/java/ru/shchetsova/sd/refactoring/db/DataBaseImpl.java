@@ -1,9 +1,8 @@
 package ru.shchetsova.sd.refactoring.db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataBaseImpl implements DataBase{
 
@@ -33,8 +32,18 @@ public class DataBaseImpl implements DataBase{
     }
 
     @Override
-    public void getAllProduct() throws SQLException {
-
+    public List<Product> getAllProduct() throws SQLException {
+        List<Product> products = new ArrayList<>();
+        try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
+            Statement stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCT");
+            while (rs.next()) {
+                String name = rs.getString("name");
+                int price = rs.getInt("price");
+                products.add(new Product(name, price));
+            }
+        }
+        return products;
     }
 
     @Override
