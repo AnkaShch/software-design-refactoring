@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataBaseImpl implements DataBase{
+public class DataBaseImpl implements DataBase {
 
     @Override
     public void createDB() throws SQLException {
@@ -34,7 +34,7 @@ public class DataBaseImpl implements DataBase{
     @Override
     public List<Product> getAllProduct() throws SQLException {
         List<Product> products = new ArrayList<>();
-        try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
+        try (Connection c = DriverManager.getConnection(DB_URL)) {
             Statement stmt = c.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCT");
             while (rs.next()) {
@@ -48,21 +48,51 @@ public class DataBaseImpl implements DataBase{
 
     @Override
     public Product getProductWithMinPrise() throws SQLException {
-        return null;
+        final String request = "SELECT * FROM PRODUCT ORDER BY PRICE LIMIT 1";
+        return getProductByRequest(request);
     }
 
     @Override
     public Product getProductWithMaxPrise() throws SQLException {
-        return null;
+        final String request = "SELECT * FROM PRODUCT ORDER BY PRICE DESC LIMIT 1";
+        return getProductByRequest(request);
     }
 
     @Override
     public long getSumPrise() throws SQLException {
-        return 0;
+        final String request = "SELECT SUM(price) FROM PRODUCT";
+        return getIntByRequest(request);
     }
 
     @Override
     public long getCountOfProduct() throws SQLException {
+        final String request = "SELECT COUNT(*) FROM PRODUCT";
+        return getIntByRequest(request);
+    }
+
+    private Product getProductByRequest(final String request) throws SQLException {
+        try (Connection c = DriverManager.getConnection(DB_URL)) {
+            try (Statement stmt = c.createStatement()) {
+                final ResultSet rs = stmt.executeQuery(request);
+                if (rs.next()) {
+                    final String name = rs.getString("name");
+                    final int price = rs.getInt("price");
+                    return new Product(name, price);
+                } else {
+                    return null;
+                }
+            }
+        }
+    }
+
+    private long getIntByRequest(final String request) throws SQLException {
+        try (Connection c = DriverManager.getConnection(DB_URL)) {
+            Statement stmt = c.createStatement();
+            final ResultSet rs = stmt.executeQuery(request);
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
         return 0;
     }
 }
