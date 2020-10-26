@@ -30,7 +30,7 @@ public class GetProductsServlet extends HttpServlet {
         }
         response.getWriter().println("<html><body>");
         for (final Product product : products) {
-            response.getWriter().println( product.getName() + "\t" + product.getPrice() + "</br>");
+            response.getWriter().println(product.getName() + "\t" + product.getPrice() + "</br>");
         }
         response.getWriter().println("</body></html>");
         response.setContentType("text/html");

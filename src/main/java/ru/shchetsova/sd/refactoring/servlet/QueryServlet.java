@@ -42,10 +42,11 @@ public class QueryServlet extends HttpServlet {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-
-            response.getWriter().println("<h1>Product with max price: </h1>");
+            response.getWriter().println("<html><body>");
+            response.getWriter().println("<h1>Product with min price: </h1>");
             response.getWriter().println(product.getName() + "\t" + product.getPrice() + "</br>");
             response.getWriter().println("</body></html>");
+
         } else if ("sum".equals(command)) {
             long sum = 0;
             try {
@@ -55,13 +56,13 @@ public class QueryServlet extends HttpServlet {
             }
             response.getWriter().println("<html><body>");
             response.getWriter().println("Summary price: ");
-                response.getWriter().println(sum);
+            response.getWriter().println(sum);
             response.getWriter().println("</body></html>");
 
         } else if ("count".equals(command)) {
             long cnt = 0;
             try {
-                cnt = db.getSumPrise();
+                cnt = db.getCountOfProduct();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

@@ -2,6 +2,8 @@ package ru.shchetsova.sd.refactoring.servlet;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.shchetsova.sd.refactoring.db.DataBase;
+import ru.shchetsova.sd.refactoring.db.DataBaseImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,15 +17,18 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class GetProductServletTest {
+    private final DataBase db = new DataBaseImpl();
     private final HttpServletRequest request = mock(HttpServletRequest.class);
     private final HttpServletResponse response = mock(HttpServletResponse.class);
     private final StringWriter writer = new StringWriter();
-    private final GetProductsServlet getProductsServlet = new GetProductsServlet(db);
+    private GetProductsServlet getProductsServlet;
 
     private static final String DB_ADDRESS = "jdbc:sqlite:test.db";
 
     @BeforeEach
     public void setup() throws IOException, SQLException {
+        db.createDB();
+        getProductsServlet = new GetProductsServlet(db);
         when(response.getWriter()).thenReturn(new PrintWriter(writer));
         try (final var connection = DriverManager.getConnection(DB_ADDRESS)) {
             final var query = "drop table if exists product";
