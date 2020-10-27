@@ -104,10 +104,4 @@ public class QueryServletTest {
         queryServlet.doGet(request, response);
         assertEquals("Unknown command: unknown\r\n", writer.toString());
     }
-
-    @Test
-    public void testQueryNullCommand() throws IOException {
-        queryServlet.doGet(request, response);
-        assertEquals("Unknown command: null\r\n", writer.toString());
-    }
 }

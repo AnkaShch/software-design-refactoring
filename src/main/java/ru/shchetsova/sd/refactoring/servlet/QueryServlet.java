@@ -23,45 +23,44 @@ public class QueryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String command = request.getParameter("command");
-        final Product product;
-
-        if ("max".equals(command)) {
-            try {
-                product = db.getProductWithMaxPrise();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+        Product product;
+        switch (command) {
+            case "max" -> {
+                try {
+                    product = db.getProductWithMaxPrise();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                Utils.printHTML(response, "<h1>Product with max price: </h1>", product.getName() + "\t" + product.getPrice() + "</br>");
             }
-            Utils.printHTML(response, "<h1>Product with max price: </h1>", product.getName() + "\t" + product.getPrice() + "</br>");
-
-        } else if ("min".equals(command)) {
-            try {
-                product = db.getProductWithMinPrise();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            case "min" -> {
+                try {
+                    product = db.getProductWithMinPrise();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                Utils.printHTML(response, "<h1>Product with min price: </h1>", product.getName() + "\t" + product.getPrice() + "</br>");
             }
-            Utils.printHTML(response, "<h1>Product with min price: </h1>", product.getName() + "\t" + product.getPrice() + "</br>");
-
-        } else if ("sum".equals(command)) {
-            long sum = 0;
-            try {
-                sum = db.getSumPrise();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            case "sum" -> {
+                long sum = 0;
+                try {
+                    sum = db.getSumPrise();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                Utils.printHTML(response, "Summary price: ", String.valueOf(sum));
             }
-            Utils.printHTML(response, "Summary price: ", String.valueOf(sum));
-
-        } else if ("count".equals(command)) {
-            long cnt = 0;
-            try {
-                cnt = db.getCountOfProduct();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            case "count" -> {
+                long cnt = 0;
+                try {
+                    cnt = db.getCountOfProduct();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                Utils.printHTML(response, "Number of products: ", String.valueOf(cnt));
             }
-            Utils.printHTML(response, "Number of products: ", String.valueOf(cnt));
-        } else {
-            response.getWriter().println("Unknown command: " + command);
+            default -> response.getWriter().println("Unknown command: " + command);
         }
-
         response.setContentType("text/html");
         response.setStatus(HttpServletResponse.SC_OK);
     }
